@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "985368062636",
+    "firebase_url": "https://shareandcare-56b97.firebaseio.com",
+    "project_id": "shareandcare-56b97",
+    "storage_bucket": "shareandcare-56b97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985368062636:android:7cd9644a8bf2990665cd09",
+        "android_client_info": {
+          "package_name": "com.greenorca.shareandcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985368062636-6uistt8q71cemu3hdj7400drolnddm0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeBnR-qBjr920DPnuXFZVgXegkDSYusN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985368062636-6uistt8q71cemu3hdj7400drolnddm0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985368062636:android:165beadcb5d44d7c65cd09",
+        "android_client_info": {
+          "package_name": "com.greenorca.shareandcare2024"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985368062636-6uistt8q71cemu3hdj7400drolnddm0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeBnR-qBjr920DPnuXFZVgXegkDSYusN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985368062636-6uistt8q71cemu3hdj7400drolnddm0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
