@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOGIN_SETTINGS = 100;
     private ArrayList<FirebaseShare> items = new ArrayList<>();
     private ListenerRegistration registration;
+
+    private String searchTerm = "";
+
     /*public void openMigrationActivity(View v){
         Intent i = new Intent(this, TestFirebaseActivity.class);
         startActivity(i);
@@ -91,10 +96,41 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_add:
                 addNewNode();
                 break;
+            case R.id.action_search:
+                openSearchDialog();
+                break;
             default:
                 break;
         }
         return true;
+    }
+
+    /**
+     * opens the search dialog
+     */
+    private void openSearchDialog(){
+        AlertDialog.Builder searchDialog = new AlertDialog.Builder(MainActivity.this);
+        searchDialog.setTitle("Volltext - Suche")
+                .setMessage("");
+
+        final EditText input = new EditText(MainActivity.this);
+        input.setText(searchTerm);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        searchDialog.setView(input);
+        AlertDialog mySearchDialog = searchDialog
+                .setPositiveButton("Suchen", (dialogInterface, i)->{
+                    searchTerm = input.getText().toString();
+                    fetchData("", searchTerm);
+                })
+                .setNegativeButton("Reset", ((dialogInterface, i) -> {
+                    searchTerm  = "";
+                    fetchData("", searchTerm);
+                }))
+                .create();
+        mySearchDialog.show();
     }
 
     /**
@@ -256,6 +292,29 @@ public class MainActivity extends AppCompatActivity {
             e.setId(doc.getId());
             items.add(e);
         }
+        if (searchTerm.trim().length()>0){
+            Log.d("Suche", "beginne filtern nach: "+searchTerm+", aus "+items.size()+"einträgen");
+            ArrayList<FirebaseShare> positiveItems = new ArrayList<>();
+            String search = searchTerm.toLowerCase().trim();
+            for (FirebaseShare item: items){
+                if (item.getTitle().toLowerCase().contains(search)){
+                    positiveItems.add(item);
+                    Log.d("Suche", "gefunden: "+item.getTitle());
+                }
+            }
+            Log.d("Suche","Anzahl gefunden: "+positiveItems.size());
+            if (positiveItems.size()>0) {
+                items.clear();
+                items.addAll(positiveItems);
+            }
+            else {
+                Toast.makeText(this, "Keine Ergebnisse", Toast.LENGTH_LONG).show();
+                openSearchDialog();
+            }
+
+        }
+
+
         FirebaseShareViewAdapter recyclerViewAdapter = new FirebaseShareViewAdapter(
                 items,
                 mFireStore,
@@ -315,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
      * @param tag may be empty string
      */
     private void fetchData(String topic, String tag) {
-        if (topic.isEmpty() && tag.isEmpty()) {
+        if (topic.isEmpty()) {
             mFireStore.collection("shared_items").orderBy("date").limit(250).get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -329,7 +388,19 @@ public class MainActivity extends AppCompatActivity {
                     });
 
         } else {
-            mFireStore.collection("shared_items").whereArrayContains("topics", topic).orderBy("date").limit(250).get()
+
+            String field = "topics";
+            String search = topic;
+            //if search term is set, prefer to search for that
+            /*if (searchTerm.trim().length()>0){
+                field = "title";
+                search = searchTerm.trim();
+                Log.d("Suche", searchTerm);
+            }*/
+
+            mFireStore.collection("shared_items")
+                    .whereArrayContains(field, search)
+                    .orderBy("date").limit(250).get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             populateView(task);

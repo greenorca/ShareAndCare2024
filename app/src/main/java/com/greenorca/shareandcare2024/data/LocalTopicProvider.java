@@ -49,7 +49,7 @@ public class LocalTopicProvider implements ITopicProvider {
     }
 
     /**
-     * abssolute basic topics, based on fixed array
+     * absolute basic topics, based on fixed array
      * @return initial set of topics
      */
     private Set<String> populateTopics() {
