@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText input = new EditText(MainActivity.this);
         input.setText(searchTerm);
+        input.requestFocus();
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
