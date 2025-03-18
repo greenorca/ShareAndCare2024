@@ -90,7 +90,7 @@ public class FirebaseShareViewAdapter extends RecyclerView.Adapter<FirebaseShare
         // create a new view
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.share_item_view, parent, false);
-
+        view.setElevation(10);
         ShareViewHolder vh = new ShareViewHolder(view);
         this.parent = parent;
         return vh;
@@ -128,7 +128,7 @@ public class FirebaseShareViewAdapter extends RecyclerView.Adapter<FirebaseShare
         FirebaseShare removeShare = sharedItems.get(position);
         new AlertDialog.Builder(parent.getContext())
             .setTitle("Vorsicht")
-            .setMessage("Soll dieser EIntrag unwiederbringlich gelöscht werden?")
+            .setMessage("Soll dieser Eintrag unwiederbringlich gelöscht werden?")
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {

@@ -4,19 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="2dp"
+    android:layout_marginBottom="6dp"
     android:background="@drawable/borderframe"
     android:clickable="true"
     android:contextClickable="false"
     android:focusable="true"
     android:padding="3dp"
-    android:paddingStart="5dp">
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    app:layout_marginBaseline="6dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:outlineAmbientShadowColor="#F57F17"
+        android:paddingEnd="5dp">
 
         <TextView
             android:id="@+id/shareTitle"
@@ -24,8 +28,12 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:linksClickable="true"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:text="TextView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColorLink="#33691E"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,13 +61,15 @@
         android:id="@+id/btnEdit"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/ic_menu_edit" />
+        android:background="@android:drawable/ic_menu_edit"
+        android:gravity="center_horizontal" />
 
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:background="@android:drawable/ic_menu_delete"
+        android:gravity="center_horizontal"
         android:minWidth="50dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/holo_orange_light"
