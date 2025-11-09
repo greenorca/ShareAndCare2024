@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -34,7 +35,6 @@ public class EditShareActivity extends AppCompatActivity {
 
     FirebaseShare inputShare = null;
     EditText txtTags , txtTitle, txtUrl, txtNotes;
-    CheckBox chipDone;
     List<String> sharedTopics;
     private ViewGroup mainTopicsLayout;
     private ViewGroup subTopicslayout;
@@ -52,7 +52,6 @@ public class EditShareActivity extends AppCompatActivity {
         txtTitle = findViewById(R.id.editTextTitle);
         txtUrl = findViewById(R.id.editTextUrl);
         txtNotes = findViewById(R.id.editTextNotizen);
-        chipDone = findViewById(R.id.chipDone);
 
         mainTopicsLayout = findViewById(R.id.mainTopicsLayout);
         subTopicslayout = findViewById(R.id.subTopicsLayout);
@@ -80,6 +79,23 @@ public class EditShareActivity extends AppCompatActivity {
                 txtUrl.setText(inputShare.getUrl());
                 txtNotes.setText(inputShare.getNotes());
 
+                // handle scrolling (hopefully)
+                txtNotes.setOnTouchListener(new View.OnTouchListener() {
+
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (txtNotes.hasFocus()) {
+                            v.getParent().requestDisallowInterceptTouchEvent(true);
+                            switch (event.getAction() & MotionEvent.ACTION_MASK){
+                                case MotionEvent.ACTION_SCROLL:
+                                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                                    return true;
+                            }
+                        }
+                        return false;
+                    }
+                });
+
+
                 StringBuilder tags = new StringBuilder();
                 if (inputShare.getTags()!=null) {
                     for (String tag : inputShare.getTags()) {
@@ -88,7 +104,7 @@ public class EditShareActivity extends AppCompatActivity {
                 }
 
                 txtTags.setText(tags.toString());
-                chipDone.setChecked(!inputShare.isOpen());
+                //chipDone.setChecked(!inputShare.isOpen());
             }
             else {
                 inputShare = new FirebaseShare("", sender);
@@ -129,7 +145,6 @@ public class EditShareActivity extends AppCompatActivity {
     public void onSaveButtonClicked(View v){
         inputShare.setTitle(txtTitle.getText().toString());
         inputShare.setUrl(txtUrl.getText().toString());
-        inputShare.setOpen(!chipDone.isChecked());
         inputShare.setNotes(txtNotes.getText().toString());
         inputShare.setTags(Arrays.asList(txtTags.getText().toString().split("[,;]")));
         inputShare.setTopics(sharedTopics);

@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:overScrollMode="always"
     android:padding="5dp"
+    android:scrollbarStyle="insideInset"
+    android:scrollbars="vertical"
     tools:context=".ViewShareActivity">
 
     <TextView
@@ -29,22 +32,13 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
-    <ScrollView
+    <TextView
+        android:id="@+id/lblNotes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/lblNotes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:maxLines="40"
-                tools:text="lorem ipsum" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:maxLines="40"
+        android:overScrollMode="ifContentScrolls"
+        android:verticalScrollbarPosition="right"
+        tools:text="lorem ipsum" />
 
 </LinearLayout>
